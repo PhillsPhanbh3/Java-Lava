@@ -1,16 +1,16 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('discord.js')
 
+
 module.exports = {
+    devCommand: true,
     data: new SlashCommandBuilder()
-    .setName('mass-unban')
+    .setName('dev-mass-unban')
     .setDescription('Unbans EVERY SINGLE PERSON IN YOUR BANS LIST from your SERVER'),
     async execute (interaction) {
 
         const { options, guild, ownerId } = interaction;
         const users = await interaction.guild.bans.fetch();
         const ids = users.map(u => u.user.id);
-
-        if (interaction.user.Id != ownerId) return await interaction.reply({ content: 'You MUST be the server owner in order to use this command, the server owner is the person that has the crown, that user is the only user that can run this command', ephermal: true});
 
         if (!users) return await interaction.reply({ content: `There is no one banned in this server`, ephermal: true});
 

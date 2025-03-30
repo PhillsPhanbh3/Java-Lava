@@ -3,7 +3,7 @@ const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('disc
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('gag-a-member')
-        .setDescription('Times out a server member (in a funny way)')
+        .setDescription('Times out a server member')
         .addUserOption(option =>
             option.setName('user')
                 .setDescription('The user you want to timeout')

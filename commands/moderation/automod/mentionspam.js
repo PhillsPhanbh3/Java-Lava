@@ -51,7 +51,7 @@ module.exports = {
 
                     const embed = new EmbedBuilder()
                     .setColor('Purple')
-                    .setDescription(`<:Verified:1089938149104427098> Your automod rule has been created, all messages of mention spam will be stopped by Java Lava bot`)
+                    .setDescription(`<:Verified:1320110619705475072> Your automod rule has been created, all messages of mention spam will be stopped by Java Lava bot`)
 
                     await interaction.editReply({ contnet: '', embeds: [embed] });
                 }, 3000)

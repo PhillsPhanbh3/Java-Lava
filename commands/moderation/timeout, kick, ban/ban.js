@@ -16,7 +16,7 @@ module.exports = {
         if (!interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers)) return await interaction.reply({ content: "You can't execute this command because you don't have the **BAN MEMBERS** permission!", ephemeral: true});
         if (!interaction.member.id === ID) return await interaction.reply({ content: "You can't ban yourself", ephemeral: true});
 
-        let reason = interaction.options.getstring('reason');
+        let reason = interaction.options.getString('reason');
         if (!reason) reason = "No reason given.";
 
         const dmEmbed = new EmbedBuilder()

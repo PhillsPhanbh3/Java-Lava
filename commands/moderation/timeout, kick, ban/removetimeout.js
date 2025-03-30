@@ -79,11 +79,7 @@ module.exports = {
             await interaction.reply({ embeds: [embed] });
         } catch (error) {
             console.error(error);
-            await interaction.reply({
-                content: `${err}
-                There was an error while attempting to remove the timeout from this user, please report this to the support server https://discord.gg/tfSB4D4X`,
-                ephemeral: true
-            });
+            await interaction.reply({content: `${err}, There was an error while attempting to remove the timeout from this user, please report this to the support server https://discord.gg/tfSB4D4X`, ephemeral: true});
         }
     }
 };

@@ -17,12 +17,12 @@ module.exports = {
         if (!kickMember) return await interaction.reply({ content: "The user mentioned is not in the server", ephemeral: true});
         if (!kickMember.kickable) return await interaction.reply({ content: "I can't kick this user because they have roles that is above me or you", ephemeral: true});
 
-        let reason = interaction.options.getstring('reason');
+        let reason = interaction.options.getString('reason');
         if (!reason) reason = "No reason given.";
 
         const dmEmbed = new EmbedBuilder()
         .setColor("DarkOrange")
-        .setDescription(`:white_check_mark: You have been kicked from the server **${interaction.guild.name} | ${reason}`)
+        .setDescription(`:white_check_mark: You have been kicked from the server **${interaction.guild.name} ** | ${reason}`)
 
         const embed = new EmbedBuilder()
         .setColor("Navy")

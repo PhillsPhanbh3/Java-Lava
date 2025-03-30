@@ -50,7 +50,7 @@ module.exports = {
 
                     const embed = new EmbedBuilder()
                     .setColor("Blurple")
-                    .setDescription('<:Verified:1320110619705475072> Your automod rule has been created, all messages containing sexual content, and slurs will be blocked by Java Lava')
+                    .setDescription('<:Verified:1320110619705475072> Your automod rule has been created, all messages containing sexual content and slurs will be blocked by Java Lava')
 
                     await interaction.editReply({ content: '', embeds: [embed]})
                 }, 3000)

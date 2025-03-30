@@ -2,9 +2,9 @@ const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('disc
 
 module.exports = {
     data: new SlashCommandBuilder()
-    .setName('automod-spam')
+    .setName('automod-spam-message')
     .setDescription('setup the spam messages automod system with the block messages suspected of spam')
-    .addSubcommand( command => command.setName('messages-alerts').setDescription('Block messages suspected of spam')),
+    .addSubcommand( command => command.setName('alerts').setDescription('Block messages suspected of spam')),
     async execute (interaction) {
 
         const { guild, options } = interaction;
@@ -51,7 +51,7 @@ module.exports = {
 
                     const embed = new EmbedBuilder()
                     .setColor('Purple')
-                    .setDescription(`<:Verified:1089938149104427098> Your automod rule has been created, all messages containing spam will be stopped by Java Lava bot`)
+                    .setDescription(`<:Verified:1089938149104427098> Your automod rule has been created, all messages containing the word ${word} will be stopped by Java Lava bot`)
 
                     await interaction.editReply({ contnet: '', embeds: [embed] });
                 }, 3000)

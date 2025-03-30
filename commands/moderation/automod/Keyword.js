@@ -2,68 +2,59 @@ const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('disc
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('automod-custom')
-        .setDescription('Setup custom words to be prevented by the AutoMod system')
-        .addSubcommand(command => 
-            command.setName('word')
-                .setDescription('Block custom word')
-                .addStringOption(option => 
-                    option.setName('word')
-                        .setDescription('The word you want to block')
-                        .setRequired(true)
-                )
-        ),
+    .setName('automod-custom')
+    .setDescription('setup custom words to be prevented by the automod system with the block messages suspected of spam')
+    .addSubcommand( command => command.setName('word').setDescription('Block custom word').addStringOption(option => option.setName('word').setDescription('The word you want to block').setRequired(true))),
+    async execute (interaction) {
 
-    async execute(interaction) {
         const { guild, options } = interaction;
         const sub = options.getSubcommand();
 
-        if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
-            return await interaction.reply({ 
-                content: 'You do not have the required permissions to set up the AutoMod system in this server.', 
-                ephemeral: true 
-            });
-        }
-
-        switch (sub) {
-            case 'word':
-                await interaction.reply({ content: '<a:Loading:1294279339361304608> Loading your flagged words AutoMod rule...' });
+        if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) return await interaction.reply({ content: 'you do not have the required perms to set up the discord automod system within this server', ephermal: true})
+        
+            switch (sub) {
+                case 'words':
+                
+                await interaction.reply({ content: '<a:Loading:1294279339361304608> Loading your flagged words automod rule...'});
                 const word = options.getString('word');
 
                 const rule = await guild.autoModerationRules.create({
-                    name: `Block the word "${word}" by Java Lava`,
+                    name: `Block the word ${word} by Java Lava`,
+                    creatorId: '1305190785536360519',
                     enabled: true,
-                    eventType: 1, // MESSAGE_SEND
-                    triggerType: 1, // KEYWORD
-                    triggerMetadata: {
-                        keywordFilter: [word] // Correct property for custom words
+                    eventType: 1,
+                    triggerType: 1,
+                    triggerMetadata:
+                    {
+                        presets: [`${word}`]
                     },
                     actions: [
                         {
-                            type: 1, // BLOCK_MESSAGE
+                            type: 1,
                             metadata: {
-                                channel: interaction.channel.id, // Use channel ID
+                                channel: interaction.channel,
                                 durationSeconds: 10,
-                                customMessage: 'This message was prevented by Java Lava AutoMod system.'
+                                customMessage: `This message was prevented by Java Lava auto moderation system`
                             }
                         }
                     ]
-                }).catch(async (err) => {
-                    console.error(err);
-                    await interaction.editReply({ 
-                        content: `An error occurred: ${err.message}
-Please report this in the support server! https://discord.gg/tfSB4D4X` 
-                    });
-                });
+                }).catch(async err => {
+                    setTimeout(async () => {
+                        console.log(err);
+                        await interaction.editReply({ content: `${err}
+                            please report a screenshot of this error to the support server! https://discord.gg/tfSB4D4X`})
+                    }, 2000)
+                })
 
-                if (rule) {
+                setTimeout(async () => {
+                    if (!rule) return;
+
                     const embed = new EmbedBuilder()
-                        .setColor('Blurple')
-                        .setDescription(`<:Verified:1320110619705475072> Your AutoMod rule has been created. All messages containing the word "${word}" will be blocked by Java Lava.`);
+                    .setColor("Blurple")
+                    .setDescription(`<:Verified:1320110619705475072> Your automod rule has been created, all messages containing the word ${word} will be blocked by Java Lava`)
 
-                    await interaction.editReply({ content: '', embeds: [embed] });
-                }
-                break;
-        }
+                    await interaction.editReply({ content: '', embeds: [embed]})
+                }, 3000)
+            }
     }
-};
+}
